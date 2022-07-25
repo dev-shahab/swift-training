@@ -14,7 +14,9 @@ class Employee{
   var emp_id:Int?
   var salary:Int?
   var designation:String?
+
   var emp_stat: String { //Computer Property
+
     if (name != nil && designation != nil)
     {
       return "\(name!.name!) is a \(designation!)"

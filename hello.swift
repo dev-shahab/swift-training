@@ -12,5 +12,11 @@ else{
   print("We didn't get a name")
 }
 
+var address:String?
+//address = "Ichhra Lahore"
+
+if address != nil {
+  print("The address is: \(address!)")
+}
 
 
