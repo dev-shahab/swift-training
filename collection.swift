@@ -15,12 +15,34 @@ ar.append(8)
 var dic = Dictionary<String,String>()
 
 dic["Name"] = "Shahab"
-print(dic["Name"]!)
+//print(dic["Name"]!)
 
 
 
 var dic2 = [String:Int]()
 dic2["Tyres"] = 5
 dic2["Steerings"] = 2
+dic2["Screen"] = 10
+//dic2["Steerings"] = nil
 
-print(dic2)
+//print(dic2)
+
+
+
+
+
+
+//Iterating the Dictionary
+
+/*
+for (key,value) in dic2{
+
+  print("Key: \(key) Value: \(value)")
+
+
+
+}*/
+
+var h = (12,34,6,7,8,1, "shahab")
+
+print(h)
