@@ -17,9 +17,9 @@ class LoginViewController: UIViewController {
     @IBAction func loginPressed(_ sender: UIButton) {
        
         if let email = emailTextfield.text, let password = passwordTextfield.text{
+            print(email)
             Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
-                guard let strongSelf = self else { return }
-                
+                print("Logged In")
                 if let e = error{
                     print(e.localizedDescription)
                 }
@@ -27,7 +27,7 @@ class LoginViewController: UIViewController {
                     self?.performSegue(withIdentifier: K.loginSegue, sender: self)
                 }
             }
-            
+            print("I am done")
         }
         
     }

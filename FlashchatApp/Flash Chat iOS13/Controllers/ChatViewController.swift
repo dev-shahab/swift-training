@@ -33,7 +33,7 @@ class ChatViewController: UIViewController {
             
             self.messages = []
             
-            if let e = error{
+            if let _ = error{
                 print("Error: Unable to retrieve data from Firesrtore")
             }
             else{
@@ -69,7 +69,7 @@ class ChatViewController: UIViewController {
                 K.FStore.senderField : messageSender,
                 K.FStore.bodyField: messageBody,
                 K.FStore.dateField: Date().timeIntervalSince1970]){ error in
-                if let e = error{
+                    if error != nil{
                     print(error,"Issue saving data to Firestore")
                 }
                 else{

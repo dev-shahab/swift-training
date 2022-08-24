@@ -25,7 +25,6 @@ class WelcomeViewController: UIViewController {
     func displayTitleInAnimation(){
         let textToBeAnimated = K.appName
         titleLabel.text = ""
-        var timer = Timer()
         var index = 1.0
         for i in textToBeAnimated{
             print(index*0.1)
