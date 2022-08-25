@@ -8,13 +8,14 @@
 
 import UIKit
 import CoreData
-
+import RealmSwift
 class CategoryTableViewController: UITableViewController {
 
-    var categoryArray:[Category] = []
     
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    let realm = try? Realm()
     
+    var categoryArray: Results<Category>?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         loadData()
@@ -25,12 +26,12 @@ class CategoryTableViewController: UITableViewController {
     //MARK: - TableView DATA Source Method
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categoryArray.count
+        return categoryArray?.count ?? 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
-        cell.textLabel?.text = categoryArray[indexPath.row].name
+        cell.textLabel?.text = categoryArray?[indexPath.row].name ?? "No Category Exists"
         return cell
     }
     
@@ -39,27 +40,25 @@ class CategoryTableViewController: UITableViewController {
     //MARK: - Data Manipulation Methods
     
     
-    func saveData(){
-        
+    func saveData(category:Category){
+        print("Challa2")
         do{
-            try context.save()
-            tableView.reloadData()
+            try realm?.write {
+                print("Category: ", category.name)
+                realm?.add(category)
+            }
             
         } catch{
-            print("Error: \(error)")
+            print("Error Jo Agyaa: \(error)")
         }
+        
+        tableView.reloadData()
     }
     
-    func loadData(with request: NSFetchRequest<Category> = Category.fetchRequest()){
+    func loadData(){
         
-        do{
-            categoryArray = try context.fetch(request)
-            
-        } catch{
-            
-            print("Error: \(error)")
-            
-        }
+        categoryArray = realm?.objects(Category.self)
+        tableView.reloadData()
     }
     
     //MARK: - Add Categories
@@ -83,10 +82,10 @@ class CategoryTableViewController: UITableViewController {
                 return
             }
             //print("Text: \(textField.text!)")
-            let category = Category(context: self!.context)
+            let category = Category()
             category.name = textField.text!
-            _weakSelf.categoryArray.append(category)
-            _weakSelf.saveData()
+            print("Challa")
+            _weakSelf.saveData(category: category)
                 
         }
         alert.addAction(action)
@@ -110,7 +109,7 @@ class CategoryTableViewController: UITableViewController {
         
         if let indexPath = tableView.indexPathForSelectedRow{
             
-            destinationVC.selectedCategory = categoryArray[indexPath.row]
+            destinationVC.selectedCategory = categoryArray?[indexPath.row]
             
         }
     }

@@ -79,6 +79,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="list" id="bRa-8c-E1b">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="e78-1H-SRH"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="76p-ay-NJ7">
                             <color key="tintColor" systemColor="systemBackgroundColor"/>
                             <connections>
@@ -100,6 +101,7 @@
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" systemColor="linkColor"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" systemColor="systemBackgroundColor"/>
                         </textAttributes>
