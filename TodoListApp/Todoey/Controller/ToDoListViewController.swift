@@ -20,12 +20,19 @@ class ToDoListViewController: UITableViewController {
     
     var itemArray:[ToDoListModel] = []
     
+    var selectedCategory:Category?{
+        
+        didSet{
+
+            loadData()
+        }
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         print(dataFilepath)
-        loadData()
-        
     }
     
     
@@ -105,7 +112,7 @@ class ToDoListViewController: UITableViewController {
                   let toDoListModel = ToDoListModel(context: context)
                   toDoListModel.title = text
                   toDoListModel.isChecked = false
-                  
+                  toDoListModel.parentCategory = selectedCategory
                   self.itemArray.append(toDoListModel)
                   //self.defaults.set(self.itemArray, forKey: )
                   //self.defaults.set(self.itemArray, forKey: "ToDoListArray")
@@ -134,7 +141,18 @@ class ToDoListViewController: UITableViewController {
     }
     
   
-    func loadData(with request: NSFetchRequest<ToDoListModel> = ToDoListModel.fetchRequest()){
+    func loadData(with request: NSFetchRequest<ToDoListModel> = ToDoListModel.fetchRequest(), predicate: NSPredicate? = nil){
+        
+        
+        let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory!.name!)
+        if let additionalPredicate = predicate{
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
+        }
+        else{
+            request.predicate = categoryPredicate
+        }
+        
+
         
         do{
             itemArray = try context.fetch(request)
@@ -157,10 +175,10 @@ extension ToDoListViewController: UISearchBarDelegate{
         
         let sortingDescriptor = NSSortDescriptor(key: "title", ascending: true)
         
-        request.predicate = predicate
+        //request.predicate = predicate
         request.sortDescriptors = [sortingDescriptor]
         
-        loadData(with: request)
+        loadData(with: request, predicate: predicate)
         
         
     }

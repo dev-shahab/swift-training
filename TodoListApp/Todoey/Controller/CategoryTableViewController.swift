@@ -79,16 +79,40 @@ class CategoryTableViewController: UITableViewController {
         let action = UIAlertAction(title: "Add", style: .default) {[weak self] text in
             
             
-            
+            guard let _weakSelf = self else {
+                return
+            }
             //print("Text: \(textField.text!)")
             let category = Category(context: self!.context)
             category.name = textField.text!
-            self!.categoryArray.append(category)
-            self!.saveData()
+            _weakSelf.categoryArray.append(category)
+            _weakSelf.saveData()
                 
         }
         alert.addAction(action)
         present(alert, animated: true)
         
     }
+    
+    
+    //MARK: - TableView Delegate
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+        
+        performSegue(withIdentifier: "ToToDoList", sender: self)
+        
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        let destinationVC = segue.destination as! ToDoListViewController
+        
+        if let indexPath = tableView.indexPathForSelectedRow{
+            
+            destinationVC.selectedCategory = categoryArray[indexPath.row]
+            
+        }
+    }
+    
 }

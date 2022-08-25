@@ -40,7 +40,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="Wh8-jE-YD6" kind="show" id="d54-Ax-9kD"/>
+                        <segue destination="Wh8-jE-YD6" kind="show" identifier="ToToDoList" id="d54-Ax-9kD"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ahJ-uP-Jsp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
